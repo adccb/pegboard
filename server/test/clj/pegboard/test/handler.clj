@@ -1,14 +1,14 @@
-(ns server.test.handler
+(ns pegboard.test.handler
   (:require [clojure.test :refer :all]
             [ring.mock.request :refer :all]
-            [server.handler :refer :all]
+            [pegboard.handler :refer :all]
             [mount.core :as mount]))
 
 (use-fixtures
   :once
   (fn [f]
-    (mount/start #'server.config/env
-                 #'server.handler/app)
+    (mount/start #'pegboard.config/env
+                 #'pegboard.handler/app)
     (f)))
 
 (deftest test-app

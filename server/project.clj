@@ -1,22 +1,27 @@
-(defproject server "0.1.0-SNAPSHOT"
+(defproject pegboard "0.1.0-SNAPSHOT"
 
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
 
   :dependencies [[clj-time "0.14.4"]
                  [compojure "1.6.1"]
+                 [conman "0.8.1"]
                  [cprop "0.1.11"]
+                 [cheshire "5.8.0"] 
                  [funcool/struct "1.3.0"]
                  [luminus-immutant "0.2.4"]
+                 [luminus-migrations "0.5.0"]
                  [luminus-nrepl "0.1.4"]
                  [luminus/ring-ttl-session "0.3.2"]
                  [markdown-clj "1.0.2"]
+                 [metosin/compojure-api "1.1.12"]
                  [metosin/muuntaja "0.5.0"]
                  [metosin/ring-http-response "0.9.0"]
                  [mount "0.1.12"]
                  [org.clojure/clojure "1.9.0"]
                  [org.clojure/tools.cli "0.3.7"]
                  [org.clojure/tools.logging "0.4.1"]
+                 [org.postgresql/postgresql "42.2.2"]
                  [org.webjars.bower/tether "1.4.4"]
                  [org.webjars/bootstrap "4.1.1"]
                  [org.webjars/font-awesome "5.1.0"]
@@ -33,14 +38,14 @@
   :test-paths ["test/clj"]
   :resource-paths ["resources"]
   :target-path "target/%s/"
-  :main ^:skip-aot server.core
+  :main ^:skip-aot pegboard.core
 
   :plugins [[lein-immutant "2.1.0"]]
 
   :profiles
   {:uberjar {:omit-source true
              :aot :all
-             :uberjar-name "server.jar"
+             :uberjar-name "pegboard.jar"
              :source-paths ["env/prod/clj"]
              :resource-paths ["env/prod/resources"]}
 

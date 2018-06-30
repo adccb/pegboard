@@ -1,8 +1,9 @@
-(ns server.core
-  (:require [server.handler :as handler]
+(ns pegboard.core
+  (:require [pegboard.handler :as handler]
             [luminus.repl-server :as repl]
             [luminus.http-server :as http]
-            [server.config :refer [env]]
+            [luminus-migrations.core :as migrations]
+            [pegboard.config :refer [env]]
             [clojure.tools.cli :refer [parse-opts]]
             [clojure.tools.logging :as log]
             [mount.core :as mount])
@@ -47,4 +48,20 @@
   (.addShutdownHook (Runtime/getRuntime) (Thread. stop-app)))
 
 (defn -main [& args]
-  (start-app args))
+  (mount/start #'pegboard.config/env)
+  (cond
+    (nil? (:database-url env))
+    (do
+      (log/error "Database configuration not found, :database-url environment variable must be set before running")
+      (System/exit 1))
+    (some #{"init"} args)
+    (do
+      (migrations/init (select-keys env [:database-url :init-script]))
+      (System/exit 0))
+    (migrations/migration? args)
+    (do
+      (migrations/migrate args (select-keys env [:database-url]))
+      (System/exit 0))
+    :else
+    (start-app args)))
+  

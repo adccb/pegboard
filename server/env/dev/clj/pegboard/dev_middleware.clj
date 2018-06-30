@@ -1,4 +1,4 @@
-(ns server.dev-middleware
+(ns pegboard.dev-middleware
   (:require [ring.middleware.reload :refer [wrap-reload]]
             [selmer.middleware :refer [wrap-error-page]]
             [prone.middleware :refer [wrap-exceptions]]))
@@ -7,4 +7,4 @@
   (-> handler
       wrap-reload
       wrap-error-page
-      (wrap-exceptions {:app-namespaces ['server]})))
+      (wrap-exceptions {:app-namespaces ['pegboard]})))

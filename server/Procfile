@@ -1,1 +1,1 @@
-web: java -cp target/uberjar/server.jar clojure.main -m server.core
+web: java -cp target/uberjar/pegboard.jar clojure.main -m pegboard.core
